@@ -1,0 +1,173 @@
+package myproject;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FileChooserUI;
+
+import java.awt.Color;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.file.attribute.AclEntry;
+import java.awt.event.ActionEvent;
+
+public class encryption {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					encryption window = new encryption();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public encryption() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 1051, 673);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 0, 0));
+		panel.setBackground(Color.BLACK);
+		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "encrytion", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 255, 255)));
+		panel.setBounds(0, 0, 1042, 642);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Welcome you can encrypt your files");
+		lblNewLabel.setForeground(new Color(51, 255, 51));
+		lblNewLabel.setFont(new Font("Sitka Text", Font.PLAIN, 18));
+		lblNewLabel.setBounds(355, 57, 313, 31);
+		panel.add(lblNewLabel);
+		
+		JLabel lblTextEncrytion = new JLabel("Text  encrytion");
+		lblTextEncrytion.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTextEncrytion.setForeground(new Color(255, 255, 255));
+		lblTextEncrytion.setBounds(63, 185, 135, 39);
+		panel.add(lblTextEncrytion);
+		
+		JLabel lblNewLabel_1 = new JLabel("File encrytion");
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(63, 358, 135, 31);
+		panel.add(lblNewLabel_1);
+		
+		JButton btnNewButton_2 = new JButton("encrypt");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent  e) {
+try {
+	
+	JFileChooser filechooser = new JFileChooser();
+	filechooser.showOpenDialog(null);
+	File file = filechooser.getSelectedFile();
+	
+	FileInputStream finput=  new FileInputStream(file);
+	byte []data = new byte[finput.available()];
+	 finput.read(data);
+	 
+	 int i=0;
+	 for(byte b: data) {
+		 
+		 data[i]=(byte)(b^76);
+		 i++;
+		 }
+	 FileOutputStream fout =new FileOutputStream(file);
+	 fout.write(data);
+	 fout.close();
+	 finput.close();
+	 JOptionPane.showMessageDialog(null, "done");
+
+	
+} catch (Exception e2) {
+	// TODO: handle exception
+}
+
+
+			
+			
+			}
+
+		});
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButton_2.setBounds(351, 192, 135, 25);
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Import\r\n");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButton_3.setBounds(351, 362, 135, 25);
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_2_1 = new JButton("decrypt");
+		btnNewButton_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					JFileChooser filechooser = new JFileChooser();
+					filechooser.showOpenDialog(null);
+					File file = filechooser.getSelectedFile();
+					
+					FileInputStream finput=  new FileInputStream(file);
+					byte []data = new byte[finput.available()];
+					 finput.read(data);
+					 
+					 int i=0;
+					 for(byte b: data) {
+						 
+						 data[i]=(byte)(b^76);
+						 i++;
+						 }
+					 FileOutputStream fout =new FileOutputStream(file);
+					 fout.write(data);
+					 fout.close();
+					 finput.close();
+					 JOptionPane.showMessageDialog(null, "done");
+					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+		});
+		btnNewButton_2_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnNewButton_2_1.setBounds(640, 193, 135, 25);
+		panel.add(btnNewButton_2_1);
+	}
+}
